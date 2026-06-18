@@ -1,0 +1,33 @@
+name: Validate catalog
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  # Catalog ranges are open-ended, so upstream releases (or yanks) can change what
+  # resolves. Re-validate weekly to catch drift even without a commit.
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "9.5.1"
+
+      - name: Resolve every catalog entry against Maven Central
+        working-directory: validation
+        run: gradle validateCatalog --no-daemon --console=plain
