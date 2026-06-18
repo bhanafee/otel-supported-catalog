@@ -1,0 +1,419 @@
+# OpenTelemetry Java agent — supported libraries version catalog
+#
+# Source: https://opentelemetry.io/docs/zero-code/java/agent/supported-libraries/
+#
+# Every entry uses a `strictly` version range so Gradle will REFUSE to resolve a
+# version outside the window the OpenTelemetry Java agent can auto-instrument.
+#   "X+"                 -> strictly = "[X,)"          (minimum supported, any newer)
+#   "X+ (not incl. Y+)"  -> strictly = "[X, Y["        (Y excluded)
+#   "A-B.x"              -> strictly = "[A, B+1["       (closed window)
+#
+# JDK-/spec-level instrumentations need no dependency and are intentionally NOT
+# listed as coordinates (they are instrumented in place by the agent):
+#   HttpURLConnection (8+), Java HTTP Client (11+), Java HTTP Server (8+),
+#   Java Executors (8+), java.util.logging (8+), Java Platform runtime (8+),
+#   JDBC (8+, bring your own driver).
+#
+# Where a single framework name maps to multiple instrumentation modules
+# (e.g. HttpClient 4.x vs 5.x), separate aliases are provided.
+
+[versions]
+
+# --- HTTP clients ---
+apache-httpclient4        = { strictly = "[4.3, 5.0[" }   # Apache HttpClient 4.3+
+apache-httpclient5        = { strictly = "[5.2,)" }       # Apache HttpClient 5.2+
+apache-httpasyncclient    = { strictly = "[4.1,)" }       # Apache HttpAsyncClient 4.1+
+asynchttpclient           = { strictly = "[1.9,)" }       # AsyncHttpClient 1.9+
+google-http-client        = { strictly = "[1.19,)" }      # Google HTTP Client 1.19+
+okhttp                    = { strictly = "[3.0,)" }       # OkHttp (module okhttp-3.0)
+jodd-http                 = { strictly = "[4.2,)" }       # Jodd HTTP 4.2+
+
+# --- Web servers / frameworks ---
+servlet-api               = { strictly = "[2.2,)" }       # Servlet 2.2+ (javax; jakarta servlet 5.0+ also instrumented)
+myfaces-impl              = { strictly = "[1.2, 4.0[" }   # Apache MyFaces 1.2+ (not incl. 4.0+ / jakarta)
+mojarra                   = { strictly = "[1.2, 4.0[" }   # Eclipse Mojarra 1.2+ (not incl. 4.0+ / jakarta)
+spring-webmvc             = { strictly = "[3.1,)" }       # Spring Web MVC 3.1+ (javax 5.3 + jakarta 6.0)
+spring-webflux            = { strictly = "[5.3,)" }       # Spring WebFlux 5.3+
+spring-boot-autoconfigure = { strictly = "[1.0,)" }       # Spring Boot Autoconfigure 1.0+
+javalin                   = { strictly = "[5.0,)" }       # Javalin 5.0+
+avaje-jex                 = { strictly = "[3.0,)" }       # Avaje Jex 3.0+
+ratpack                   = { strictly = "[1.5,)" }       # Ratpack 1.5+
+spark-java                = { strictly = "[2.3,)" }       # Spark Java 2.3+
+grails                    = { strictly = "[3.0,)" }       # Grails 3.0+
+vaadin                    = { strictly = "[14.2,)" }      # Vaadin 14.2+
+wicket                    = { strictly = "[8.0,)" }       # Apache Wicket 8.0+
+tapestry                  = { strictly = "[5.4,)" }       # Apache Tapestry 5.4+
+struts2                   = { strictly = "[2.3,)" }       # Apache Struts 2.3+
+gwt                       = { strictly = "[2.0,)" }       # GWT 2.0+
+vertx-web                 = { strictly = "[3.0,)" }       # Vert.x 3.0+
+helidon-webserver         = { strictly = "[4.3,)" }       # Helidon 4.3+
+jersey-server             = { strictly = "[2.0,)" }       # Eclipse Jersey / JAX-RS 2.0+
+resteasy                  = { strictly = "[3.0, 6.0[" }   # RESTEasy 3.0+ (not incl. 6.0+)
+resteasy-reactive         = { strictly = "[2.13.8,)" }    # RESTEasy Reactive 2.13.8+
+quarkus-resteasy-reactive = { strictly = "[2.16.7,)" }    # Quarkus Resteasy Reactive 2.16.7+
+grizzly-http-server       = { strictly = "[2.3,)" }       # Eclipse Grizzly 2.3+
+jetty-server              = { strictly = "[9.2,)" }       # Eclipse Jetty
+jetty-httpclient9         = { strictly = "[9.2, 9.5[" }   # Jetty HTTP Client 9.2-9.4.x
+jetty-httpclient12        = { strictly = "[12.0,)" }      # Jetty HTTP Client 12.0+
+tomcat-embed              = { strictly = "[7.0,)" }       # Tomcat 7.0+ (through 10.1+)
+undertow                  = { strictly = "[1.3,)" }       # Undertow 1.3+
+tomcat-jasper             = { strictly = "[2.3, 2.4[" }   # JSP 2.3.x only
+armeria                   = { strictly = "[1.3,)" }       # Armeria 1.3+
+armeria-grpc              = { strictly = "[1.14,)" }      # Armeria gRPC 1.14+
+finatra-http              = { strictly = "[2.9,)" }       # Finatra 2.9+
+finagle-http              = { strictly = "[23.11,)" }     # Finagle 23.11+
+akka-http                 = { strictly = "[10.0,)" }      # Akka HTTP 10.0+
+pekko-http                = { strictly = "[1.0,)" }       # Apache Pekko HTTP 1.0+
+play                      = { strictly = "[2.4,)" }       # Play MVC 2.4+
+play-ws                   = { strictly = "[1.0,)" }       # Play WS 1.0+
+dropwizard-views          = { strictly = "[0.7,)" }       # Dropwizard Views 0.7+
+
+# --- Messaging ---
+kafka-clients             = { strictly = "[2.6,)" }       # Kafka Producer/Consumer (module 2.6)
+kafka-streams             = { strictly = "[0.11,)" }      # Kafka Streams API 0.11+
+kafka-connect             = { strictly = "[2.6,)" }       # Kafka Connect API 2.6+
+spring-kafka              = { strictly = "[2.2,)" }       # Spring Kafka 2.2+
+jms-api                   = { strictly = "[1.1,)" }       # JMS 1.1+
+spring-jms                = { strictly = "[2.0,)" }       # Spring JMS 2.0+
+rabbitmq-amqp-client      = { strictly = "[2.7,)" }       # RabbitMQ client
+spring-rabbit             = { strictly = "[1.0,)" }       # Spring RabbitMQ 1.0+
+pulsar-client             = { strictly = "[2.8,)" }       # Apache Pulsar 2.8+
+rocketmq-client4          = { strictly = "[4.8,)" }       # RocketMQ Remoting-based 4.8+
+rocketmq-client5          = { strictly = "[5.0,)" }       # RocketMQ gRPC-based 5.0+
+nats-client               = { strictly = "[2.17.2,)" }    # NATS Client 2.17.2+
+
+# --- Databases, JDBC pools, R2DBC ---
+r2dbc-spi                 = { strictly = "[1.0,)" }       # R2DBC 1.0+
+hikaricp                  = { strictly = "[3.0,)" }       # HikariCP 3.0+
+c3p0                      = { strictly = "[0.9.2,)" }     # c3p0 0.9.2+
+commons-dbcp2             = { strictly = "[2.0,)" }       # Apache DBCP 2.0+
+druid                     = { strictly = "[1.0,)" }       # Alibaba Druid 1.0+
+oracle-ucp                = { strictly = "[11.2,)" }      # Oracle UCP 11.2+
+vibur-dbcp                = { strictly = "[25.0,)" }      # Vibur DBPool 25.0+
+tomcat-jdbc               = { strictly = "[8.5,)" }       # Tomcat JDBC Pool 8.5+
+
+# --- NoSQL / cache / search ---
+mongodb-driver            = { strictly = "[3.1,)" }       # MongoDB Driver 3.1+
+cassandra-driver3         = { strictly = "[3.0, 4.0[" }   # Cassandra Driver 3.x
+cassandra-driver4         = { strictly = "[4.4,)" }       # Cassandra Driver 4.4+
+jedis                     = { strictly = "[1.4,)" }       # Jedis 1.4+
+lettuce                   = { strictly = "[5.1,)" }       # Lettuce (module 5.1)
+redisson                  = { strictly = "[3.5,)" }       # Redisson 3.5+
+couchbase2                = { strictly = "[2.0, 2.8[" }   # Couchbase Client 2.0-2.7.x
+couchbase3                = { strictly = "[3.1,)" }       # Couchbase Client 3.1+
+geode-core                = { strictly = "[1.4,)" }       # Geode Client 1.4+
+elasticsearch-rest-client = { strictly = "[5.0,)" }       # Elasticsearch REST Client 5.0+
+elasticsearch-java        = { strictly = "[7.16,)" }      # Elasticsearch API Client 7.16+
+elasticsearch-transport   = { strictly = "[5.0,)" }       # Elasticsearch Transport Client 5.0+
+opensearch-rest-client    = { strictly = "[1.0,)" }       # OpenSearch Rest Client 1.0+
+opensearch-java           = { strictly = "[3.0,)" }       # OpenSearch Java Client 3.0+
+influxdb-client           = { strictly = "[2.4,)" }       # InfluxDB Client 2.4+
+clickhouse-client         = { strictly = "[0.5,)" }       # Clickhouse Client V1 0.5+
+clickhouse-client-v2      = { strictly = "[0.8,)" }       # Clickhouse Client V2 0.8+
+iceberg                   = { strictly = "[1.8,)" }       # Apache Iceberg (module 1.8)
+mybatis                   = { strictly = "[3.2,)" }       # MyBatis 3.2+
+hibernate                 = { strictly = "[3.3,)" }       # Hibernate 3.3+
+hibernate-reactive        = { strictly = "[1.0,)" }       # Hibernate Reactive 1.0+
+spring-data-commons       = { strictly = "[2.0,)" }       # Spring Data 2.0+
+
+# --- RPC / web services / serialization / GraphQL ---
+grpc                      = { strictly = "[1.6,)" }       # gRPC 1.6+
+dubbo                     = { strictly = "[2.7,)" }       # Apache Dubbo 2.7+
+graphql-java              = { strictly = "[12.0,)" }      # GraphQL Java 12.0+
+cxf-jaxrs                 = { strictly = "[3.2, 4.0[" }   # Apache CXF JAX-RS 3.2+ (not incl. 4.0+)
+cxf-jaxws                 = { strictly = "[3.0, 4.0[" }   # Apache CXF JAX-WS 3.0+ (not incl. 4.0+)
+axis2                     = { strictly = "[1.6,)" }       # Apache Axis2 1.6+
+jaxws-api                 = { strictly = "[2.0, 3.0[" }   # JAX-WS 2.0+ (not incl. 3.0+)
+metro                     = { strictly = "[2.2,)" }       # Eclipse Metro 2.2+
+spring-ws-core            = { strictly = "[2.0, 4.0[" }   # Spring Web Services 2.0+ (not incl. 4.0+ / jakarta)
+
+# --- Cloud / SDKs / clients ---
+aws-sdk1                  = { strictly = "[1.11, 1.12.584[" } # AWS SDK 1.11-1.12.583
+aws-sdk2                  = { strictly = "[2.2,)" }       # AWS SDK 2.2+
+aws-lambda-core           = { strictly = "[1.0,)" }       # AWS Lambda 1.0+
+aws-lambda-events         = { strictly = "[3.11,)" }      # AWS Lambda events (module 3.11)
+azure-core                = { strictly = "[1.14,)" }      # Azure Core 1.14+
+kubernetes-client         = { strictly = "[7.0,)" }       # Kubernetes Client 7.0+
+twilio                    = { strictly = "[7.0,)" }       # Twilio SDK 7.0+
+openai-java               = { strictly = "[1.1,)" }       # OpenAI Java SDK 1.1+
+
+# --- Reactive / async / concurrency / scheduling ---
+reactor                   = { strictly = "[3.1,)" }       # Reactor 3.1+
+rxjava1                   = { strictly = "[1.0, 2.0[" }   # RxJava 1.0+
+rxjava2                   = { strictly = "[2.0,)" }       # RxJava 2 2.0+
+rxjava3                   = { strictly = "[3.0,)" }       # RxJava 3 3.0+
+kotlinx-coroutines        = { strictly = "[1.0,)" }       # Kotlin Coroutines 1.0+
+guava                     = { strictly = "[10.0,)" }      # Guava ListenableFuture 10.0+
+akka-actor                = { strictly = "[2.3,)" }       # Akka Actors 2.3+
+pekko-actor               = { strictly = "[1.0,)" }       # Apache Pekko Actors 1.0+
+hystrix                   = { strictly = "[1.4,)" }       # Hystrix 1.4+
+failsafe                  = { strictly = "[3.0,)" }       # Failsafe (module 3.0)
+quartz                    = { strictly = "[2.0,)" }       # Quartz 2.0+
+spring-context            = { strictly = "[3.1,)" }       # Spring Scheduling 3.1+
+spring-batch              = { strictly = "[4.0,)" }       # Spring Batch 4.0+
+spring-integration        = { strictly = "[4.1,)" }       # Spring Integration 4.1+
+powerjob                  = { strictly = "[4.0.0,)" }     # PowerJob 4.0.0+
+elasticjob                = { strictly = "[3.0,)" }       # Apache ElasticJob 3.0+
+shenyu                    = { strictly = "[2.4,)" }       # Apache ShenYu 2.4+
+camel                     = { strictly = "[2.20, 3.0[" }  # Apache Camel 2.20+ (not incl. 3.0+)
+activej                   = { strictly = "[6.0,)" }       # ActiveJ 6.0+
+jfinal                    = { strictly = "[3.2,)" }       # JFinal 3.2+
+ktor-server               = { strictly = "[1.0,)" }       # Ktor 1.0+
+
+# --- Logging ---
+log4j1                    = { strictly = "[1.2, 2.0[" }   # Log4j 1 1.2+
+log4j2                    = { strictly = "[2.11,)" }      # Log4j 2 2.11+
+logback                   = { strictly = "[1.0,)" }       # Logback 1.0+
+jboss-logmanager          = { strictly = "[1.1,)" }       # JBoss Log Manager 1.1+
+
+# --- Metrics / runtime / system ---
+micrometer                = { strictly = "[1.5,)" }       # Micrometer 1.5+ (disabled by default)
+dropwizard-metrics        = { strictly = "[4.0,)" }       # Dropwizard Metrics 4.0+ (disabled by default)
+oshi                      = { strictly = "[5.3.1,)" }     # OSHI 5.3.1+
+
+[libraries]
+
+# --- HTTP clients ---
+apache-httpclient4        = { module = "org.apache.httpcomponents:httpclient",        version.ref = "apache-httpclient4" }
+apache-httpclient5        = { module = "org.apache.httpcomponents.client5:httpclient5", version.ref = "apache-httpclient5" }
+apache-httpasyncclient    = { module = "org.apache.httpcomponents:httpasyncclient",   version.ref = "apache-httpasyncclient" }
+asynchttpclient           = { module = "org.asynchttpclient:async-http-client",        version.ref = "asynchttpclient" }
+google-http-client        = { module = "com.google.http-client:google-http-client",   version.ref = "google-http-client" }
+okhttp                    = { module = "com.squareup.okhttp3:okhttp",                  version.ref = "okhttp" }
+jodd-http                 = { module = "org.jodd:jodd-http",                           version.ref = "jodd-http" }
+
+# --- Web servers / frameworks ---
+servlet-api               = { module = "javax.servlet:javax.servlet-api",              version.ref = "servlet-api" }
+spring-webmvc             = { module = "org.springframework:spring-webmvc",            version.ref = "spring-webmvc" }
+spring-webflux            = { module = "org.springframework:spring-webflux",           version.ref = "spring-webflux" }
+spring-boot-autoconfigure = { module = "org.springframework.boot:spring-boot-autoconfigure", version.ref = "spring-boot-autoconfigure" }
+javalin                   = { module = "io.javalin:javalin",                           version.ref = "javalin" }
+avaje-jex                 = { module = "io.avaje:avaje-jex",                            version.ref = "avaje-jex" }
+ratpack-core              = { module = "io.ratpack:ratpack-core",                      version.ref = "ratpack" }
+spark-core                = { module = "com.sparkjava:spark-core",                     version.ref = "spark-java" }
+grails-core               = { module = "org.grails:grails-core",                       version.ref = "grails" }
+vaadin                    = { module = "com.vaadin:vaadin",                            version.ref = "vaadin" }
+wicket-core               = { module = "org.apache.wicket:wicket-core",                version.ref = "wicket" }
+tapestry-core             = { module = "org.apache.tapestry:tapestry-core",            version.ref = "tapestry" }
+struts2-core              = { module = "org.apache.struts:struts2-core",               version.ref = "struts2" }
+gwt-servlet               = { module = "com.google.gwt:gwt-servlet",                   version.ref = "gwt" }
+vertx-web                 = { module = "io.vertx:vertx-web",                            version.ref = "vertx-web" }
+helidon-webserver         = { module = "io.helidon.webserver:helidon-webserver",       version.ref = "helidon-webserver" }
+jersey-server             = { module = "org.glassfish.jersey.core:jersey-server",      version.ref = "jersey-server" }
+myfaces-impl              = { module = "org.apache.myfaces.core:myfaces-impl",          version.ref = "myfaces-impl" }
+mojarra                   = { module = "org.glassfish:javax.faces",                     version.ref = "mojarra" }
+resteasy-core             = { module = "org.jboss.resteasy:resteasy-core",             version.ref = "resteasy" }
+resteasy-reactive         = { module = "org.jboss.resteasy:resteasy-core",             version.ref = "resteasy-reactive" }
+quarkus-resteasy-reactive = { module = "io.quarkus:quarkus-resteasy-reactive",         version.ref = "quarkus-resteasy-reactive" }
+grizzly-http-server       = { module = "org.glassfish.grizzly:grizzly-http-server",    version.ref = "grizzly-http-server" }
+jetty-server              = { module = "org.eclipse.jetty:jetty-server",               version.ref = "jetty-server" }
+jetty-httpclient9         = { module = "org.eclipse.jetty:jetty-client",               version.ref = "jetty-httpclient9" }
+jetty-httpclient12        = { module = "org.eclipse.jetty:jetty-client",               version.ref = "jetty-httpclient12" }
+tomcat-embed-core         = { module = "org.apache.tomcat.embed:tomcat-embed-core",    version.ref = "tomcat-embed" }
+undertow-core             = { module = "io.undertow:undertow-core",                    version.ref = "undertow" }
+tomcat-jasper             = { module = "org.apache.tomcat:tomcat-jasper",              version.ref = "tomcat-jasper" }
+armeria                   = { module = "com.linecorp.armeria:armeria",                 version.ref = "armeria" }
+armeria-grpc              = { module = "com.linecorp.armeria:armeria-grpc",            version.ref = "armeria-grpc" }
+finatra-http              = { module = "com.twitter:finatra-http_2.13",                version.ref = "finatra-http" }
+finagle-http              = { module = "com.twitter:finagle-http_2.13",                version.ref = "finagle-http" }
+akka-http                 = { module = "com.typesafe.akka:akka-http_2.13",             version.ref = "akka-http" }
+pekko-http                = { module = "org.apache.pekko:pekko-http_2.13",             version.ref = "pekko-http" }
+play                      = { module = "org.playframework:play_2.13",                  version.ref = "play" }
+play-ws                   = { module = "org.playframework:play-ws_2.13",               version.ref = "play-ws" }
+dropwizard-views          = { module = "io.dropwizard:dropwizard-views",               version.ref = "dropwizard-views" }
+
+# --- Messaging ---
+kafka-clients             = { module = "org.apache.kafka:kafka-clients",               version.ref = "kafka-clients" }
+kafka-streams             = { module = "org.apache.kafka:kafka-streams",               version.ref = "kafka-streams" }
+kafka-connect-api         = { module = "org.apache.kafka:connect-api",                 version.ref = "kafka-connect" }
+spring-kafka              = { module = "org.springframework.kafka:spring-kafka",       version.ref = "spring-kafka" }
+jms-api                   = { module = "javax.jms:javax.jms-api",                      version.ref = "jms-api" }
+spring-jms                = { module = "org.springframework:spring-jms",               version.ref = "spring-jms" }
+rabbitmq-amqp-client      = { module = "com.rabbitmq:amqp-client",                     version.ref = "rabbitmq-amqp-client" }
+spring-rabbit             = { module = "org.springframework.amqp:spring-rabbit",       version.ref = "spring-rabbit" }
+pulsar-client             = { module = "org.apache.pulsar:pulsar-client",              version.ref = "pulsar-client" }
+rocketmq-client4          = { module = "org.apache.rocketmq:rocketmq-client",          version.ref = "rocketmq-client4" }
+rocketmq-client5          = { module = "org.apache.rocketmq:rocketmq-client-java",     version.ref = "rocketmq-client5" }
+nats-client               = { module = "io.nats:jnats",                               version.ref = "nats-client" }
+
+# --- Databases, JDBC pools, R2DBC ---
+r2dbc-spi                 = { module = "io.r2dbc:r2dbc-spi",                           version.ref = "r2dbc-spi" }
+hikaricp                  = { module = "com.zaxxer:HikariCP",                          version.ref = "hikaricp" }
+c3p0                      = { module = "com.mchange:c3p0",                             version.ref = "c3p0" }
+commons-dbcp2             = { module = "org.apache.commons:commons-dbcp2",            version.ref = "commons-dbcp2" }
+druid                     = { module = "com.alibaba:druid",                            version.ref = "druid" }
+oracle-ucp                = { module = "com.oracle.database.jdbc:ucp",                 version.ref = "oracle-ucp" }
+vibur-dbcp                = { module = "org.vibur:vibur-dbcp",                          version.ref = "vibur-dbcp" }
+tomcat-jdbc               = { module = "org.apache.tomcat:tomcat-jdbc",                version.ref = "tomcat-jdbc" }
+
+# --- NoSQL / cache / search ---
+mongodb-driver-sync       = { module = "org.mongodb:mongodb-driver-sync",              version.ref = "mongodb-driver" }
+cassandra-driver3         = { module = "com.datastax.cassandra:cassandra-driver-core", version.ref = "cassandra-driver3" }
+cassandra-driver4         = { module = "com.datastax.oss:java-driver-core",            version.ref = "cassandra-driver4" }
+jedis                     = { module = "redis.clients:jedis",                          version.ref = "jedis" }
+lettuce-core              = { module = "io.lettuce:lettuce-core",                      version.ref = "lettuce" }
+redisson                  = { module = "org.redisson:redisson",                        version.ref = "redisson" }
+couchbase-client2         = { module = "com.couchbase.client:java-client",             version.ref = "couchbase2" }
+couchbase-client3         = { module = "com.couchbase.client:java-client",             version.ref = "couchbase3" }
+geode-core                = { module = "org.apache.geode:geode-core",                  version.ref = "geode-core" }
+elasticsearch-rest-client = { module = "org.elasticsearch.client:elasticsearch-rest-client", version.ref = "elasticsearch-rest-client" }
+elasticsearch-java        = { module = "co.elastic.clients:elasticsearch-java",        version.ref = "elasticsearch-java" }
+elasticsearch-transport   = { module = "org.elasticsearch:elasticsearch",             version.ref = "elasticsearch-transport" }
+opensearch-rest-client    = { module = "org.opensearch.client:opensearch-rest-client", version.ref = "opensearch-rest-client" }
+opensearch-java           = { module = "org.opensearch.client:opensearch-java",        version.ref = "opensearch-java" }
+influxdb-client           = { module = "com.influxdb:influxdb-client-java",            version.ref = "influxdb-client" }
+clickhouse-client         = { module = "com.clickhouse:clickhouse-client",             version.ref = "clickhouse-client" }
+clickhouse-client-v2      = { module = "com.clickhouse:client-v2",                     version.ref = "clickhouse-client-v2" }
+iceberg-core              = { module = "org.apache.iceberg:iceberg-core",              version.ref = "iceberg" }
+mybatis                   = { module = "org.mybatis:mybatis",                          version.ref = "mybatis" }
+hibernate-core            = { module = "org.hibernate:hibernate-core",                 version.ref = "hibernate" }
+hibernate-reactive-core   = { module = "org.hibernate.reactive:hibernate-reactive-core", version.ref = "hibernate-reactive" }
+spring-data-commons       = { module = "org.springframework.data:spring-data-commons", version.ref = "spring-data-commons" }
+
+# --- RPC / web services / serialization / GraphQL ---
+grpc-api                  = { module = "io.grpc:grpc-api",                             version.ref = "grpc" }
+dubbo                     = { module = "org.apache.dubbo:dubbo",                       version.ref = "dubbo" }
+graphql-java              = { module = "com.graphql-java:graphql-java",                version.ref = "graphql-java" }
+cxf-rt-frontend-jaxrs     = { module = "org.apache.cxf:cxf-rt-frontend-jaxrs",        version.ref = "cxf-jaxrs" }
+cxf-rt-frontend-jaxws     = { module = "org.apache.cxf:cxf-rt-frontend-jaxws",        version.ref = "cxf-jaxws" }
+axis2-kernel              = { module = "org.apache.axis2:axis2-kernel",               version.ref = "axis2" }
+jaxws-api                 = { module = "javax.xml.ws:jaxws-api",                      version.ref = "jaxws-api" }
+metro-rt                  = { module = "com.sun.xml.ws:rt",                           version.ref = "metro" }
+spring-ws-core            = { module = "org.springframework.ws:spring-ws-core",       version.ref = "spring-ws-core" }
+
+# --- Cloud / SDKs / clients ---
+aws-sdk1-core             = { module = "com.amazonaws:aws-java-sdk-core",             version.ref = "aws-sdk1" }
+aws-sdk2-core             = { module = "software.amazon.awssdk:aws-core",             version.ref = "aws-sdk2" }
+aws-lambda-core           = { module = "com.amazonaws:aws-lambda-java-core",          version.ref = "aws-lambda-core" }
+aws-lambda-events         = { module = "com.amazonaws:aws-lambda-java-events",        version.ref = "aws-lambda-events" }
+azure-core                = { module = "com.azure:azure-core",                        version.ref = "azure-core" }
+kubernetes-client         = { module = "io.kubernetes:client-java",                  version.ref = "kubernetes-client" }
+twilio                    = { module = "com.twilio.sdk:twilio",                       version.ref = "twilio" }
+openai-java               = { module = "com.openai:openai-java",                      version.ref = "openai-java" }
+
+# --- Reactive / async / concurrency / scheduling ---
+reactor-core              = { module = "io.projectreactor:reactor-core",              version.ref = "reactor" }
+rxjava1                   = { module = "io.reactivex:rxjava",                         version.ref = "rxjava1" }
+rxjava2                   = { module = "io.reactivex.rxjava2:rxjava",                 version.ref = "rxjava2" }
+rxjava3                   = { module = "io.reactivex.rxjava3:rxjava",                 version.ref = "rxjava3" }
+kotlinx-coroutines-core   = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+guava                     = { module = "com.google.guava:guava",                      version.ref = "guava" }
+akka-actor                = { module = "com.typesafe.akka:akka-actor_2.13",           version.ref = "akka-actor" }
+pekko-actor               = { module = "org.apache.pekko:pekko-actor_2.13",           version.ref = "pekko-actor" }
+hystrix-core              = { module = "com.netflix.hystrix:hystrix-core",            version.ref = "hystrix" }
+failsafe                  = { module = "dev.failsafe:failsafe",                       version.ref = "failsafe" }
+quartz                    = { module = "org.quartz-scheduler:quartz",                version.ref = "quartz" }
+spring-context            = { module = "org.springframework:spring-context",          version.ref = "spring-context" }
+spring-batch-core         = { module = "org.springframework.batch:spring-batch-core", version.ref = "spring-batch" }
+spring-integration-core   = { module = "org.springframework.integration:spring-integration-core", version.ref = "spring-integration" }
+powerjob-worker           = { module = "tech.powerjob:powerjob-worker",              version.ref = "powerjob" }
+elasticjob-lite-core      = { module = "org.apache.shardingsphere.elasticjob:elasticjob-lite-core", version.ref = "elasticjob" }
+shenyu-bootstrap          = { module = "org.apache.shenyu:shenyu-bootstrap",          version.ref = "shenyu" }
+camel-core                = { module = "org.apache.camel:camel-core",                 version.ref = "camel" }
+activej-launcher          = { module = "io.activej:activej-launcher",                 version.ref = "activej" }
+jfinal                    = { module = "com.jfinal:jfinal",                           version.ref = "jfinal" }
+ktor-server-core          = { module = "io.ktor:ktor-server-core",                    version.ref = "ktor-server" }
+
+# --- Logging ---
+log4j1                    = { module = "log4j:log4j",                                 version.ref = "log4j1" }
+log4j2-core               = { module = "org.apache.logging.log4j:log4j-core",         version.ref = "log4j2" }
+logback-classic           = { module = "ch.qos.logback:logback-classic",             version.ref = "logback" }
+jboss-logmanager          = { module = "org.jboss.logmanager:jboss-logmanager",       version.ref = "jboss-logmanager" }
+
+# --- Metrics / runtime / system ---
+micrometer-core           = { module = "io.micrometer:micrometer-core",               version.ref = "micrometer" }
+dropwizard-metrics-core   = { module = "io.dropwizard.metrics:metrics-core",          version.ref = "dropwizard-metrics" }
+oshi-core                 = { module = "com.github.oshi:oshi-core",                   version.ref = "oshi" }
+
+[bundles]
+# Convenience groupings of commonly co-used, OTel-instrumented libraries.
+# Where a library ships javax/jakarta or v-N variants, the bundle picks the modern
+# one to avoid pulling conflicting versions into one resolution; the other alias
+# remains available individually.
+
+http-clients = [
+    "apache-httpclient5",
+    "apache-httpasyncclient",
+    "asynchttpclient",
+    "google-http-client",
+    "okhttp",
+    "jodd-http",
+]
+
+spring = [
+    "spring-boot-autoconfigure",
+    "spring-webmvc",
+    "spring-webflux",
+    "spring-data-commons",
+    "spring-context",
+    "spring-batch-core",
+    "spring-integration-core",
+    "spring-ws-core",
+]
+
+spring-messaging = [
+    "spring-kafka",
+    "spring-jms",
+    "spring-rabbit",
+]
+
+messaging = [
+    "kafka-clients",
+    "kafka-streams",
+    "jms-api",
+    "rabbitmq-amqp-client",
+    "pulsar-client",
+    "rocketmq-client5",
+    "nats-client",
+]
+
+jdbc-pools = [
+    "hikaricp",
+    "c3p0",
+    "commons-dbcp2",
+    "druid",
+    "oracle-ucp",
+    "vibur-dbcp",
+    "tomcat-jdbc",
+]
+
+nosql = [
+    "mongodb-driver-sync",
+    "cassandra-driver4",
+    "jedis",
+    "lettuce-core",
+    "redisson",
+    "couchbase-client3",
+    "geode-core",
+]
+
+search = [
+    "elasticsearch-rest-client",
+    "elasticsearch-java",
+    "opensearch-rest-client",
+    "opensearch-java",
+]
+
+reactive = [
+    "reactor-core",
+    "rxjava3",
+    "kotlinx-coroutines-core",
+]
+
+aws = [
+    "aws-sdk2-core",
+    "aws-lambda-core",
+    "aws-lambda-events",
+]
+
+logging = [
+    "log4j2-core",
+    "logback-classic",
+    "jboss-logmanager",
+]
+
+metrics = [
+    "micrometer-core",
+    "dropwizard-metrics-core",
+    "oshi-core",
+]
