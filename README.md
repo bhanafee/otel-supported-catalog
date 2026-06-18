@@ -136,6 +136,25 @@ JDK- and spec-level instrumentations need no catalog entry — the agent instrum
 in place: HttpURLConnection, Java HTTP Client/Server, Java Executors, `java.util.logging`,
 the Java Platform runtime, and JDBC (bring your own driver).
 
+## Validation / CI
+
+The `validation/` directory is a small standalone Gradle project that resolves every
+library alias in the catalog (each in its own detached, non-transitive configuration,
+so the deliberate same-module variants like `couchbase-client2`/`3` don't conflict).
+It asserts that a version satisfying each `strictly` range actually exists on Maven
+Central.
+
+```bash
+cd validation && gradle validateCatalog
+```
+
+`.github/workflows/validate-catalog.yml` runs this on every push/PR and weekly (the
+ranges are open-ended, so an upstream release can change what resolves). Entries whose
+supported floor has no stable release yet (currently ActiveJ 6.0, which only has
+`6.0-rc*`) are listed in `unresolvableYet` in `validation/build.gradle.kts` and reported
+as warnings rather than failures — remove an alias from that map once its stable version
+ships.
+
 ## Keeping it current
 
 The supported-libraries list changes with every agent release; this catalog reflects the
